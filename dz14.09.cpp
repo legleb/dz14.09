@@ -1,5 +1,4 @@
 #include <iostream>
-#include <thread>
 #include <vector>
 #include <cstddef>
 #include <exception>
@@ -28,12 +27,12 @@ class Clicker {
 using data_t = std::vector< unsigned long long >;
 using value_t = data_t::value_type;
 
-void sum(const data_t & vals, size_t st, size_t lng, std::promise< value_t > prom) {
+value_t sum(const data_t & vals, size_t st, size_t lng) {
   value_t sm = 0;
   for (size_t i = st; i < st + lng; ++i) {
     sm += vals[i];
   }
-  prom.set_value(sm);
+  return sm;
 }
 
 int main(int argc, char * argv[]) {
@@ -59,8 +58,6 @@ int main(int argc, char * argv[]) {
   data_t values(size, 1);
   std::vector< std::future< value_t > > ftrs;
   ftrs.reserve(countPotoc);
-  std::vector< std::thread > ths;
-  ths.reserve(countPotoc);
   size_t baseSizePart = size / countPotoc;
   size_t dopSizePart = size % countPotoc;
   size_t idx = 0;
@@ -70,13 +67,8 @@ int main(int argc, char * argv[]) {
     Clicker cl;
     for (size_t i = 0; i < countPotoc; ++i) {
       size_t sizePart = baseSizePart + (i < dopSizePart ? 1 : 0);
-      std::promise< value_t > prom;
-      ftrs.push_back(prom.get_future());
-      ths.emplace_back(sum, std::cref(values), idx, sizePart, std::move(prom));
+      ftrs.push_back(std::async(std::launch::async, sum, std::cref(values), idx, sizePart));
       idx += sizePart;
-    }
-    for (size_t i = 0; i < countPotoc; ++i) {
-      ths[i].join();
     }
     for (size_t i = 0; i < countPotoc; ++i) {
       result += ftrs[i].get();
