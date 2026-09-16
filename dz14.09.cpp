@@ -67,7 +67,7 @@ int main(int argc, char * argv[]) {
     Clicker cl;
     for (size_t i = 0; i < countPotoc; ++i) {
       size_t sizePart = baseSizePart + (i < dopSizePart ? 1 : 0);
-      ftrs.push_back(std::async(std::launch::async, sum, std::cref(values), idx, sizePart));
+      ftrs.emplace_back(std::async(std::launch::async, sum, std::cref(values), idx, sizePart));
       idx += sizePart;
     }
     for (size_t i = 0; i < countPotoc; ++i) {
