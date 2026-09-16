@@ -2,9 +2,9 @@
 
 Это график при обычной компиляции, без флагов:
 
-<img width="1140" height="674" alt="image" src="https://github.com/user-attachments/assets/7d310d76-4b5c-4a90-9cb3-ab994d0c1cd9" />
+<img width="1116" height="640" alt="image" src="https://github.com/user-attachments/assets/396bd176-7d10-428b-957c-6fdf9a9abe37" />
 
 Это график при компиляции с флагами **-pthread** и **-O2**:
 
-<img width="1055" height="641" alt="image" src="https://github.com/user-attachments/assets/43e5f849-2d7c-4980-be50-c62710050eca" />
+<img width="1116" height="641" alt="image" src="https://github.com/user-attachments/assets/8d6ef5f9-30a7-4e42-af4e-c021db9dd055" />
 
